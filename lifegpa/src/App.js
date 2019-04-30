@@ -1,26 +1,31 @@
-import React from 'react';
-import axios from 'axios';
-import Launchpage from './Components/Launchpage';
-import { Route } from 'react-router-dom';
-
-import Login from './Components/Login';
-import SignUp from './Components/SignUp';
-import { HomePage } from './Components/HomePage';
-
-
+import React, { Component } from 'react';
 
 import './App.css';
+import Loginscreen from './Components/LoginScreen'
+class App extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      loginPage:[],
+    }
+  }
 
 
-function App() {
-  return (
-    <div className="App">
-    <Route exact path="/" component={Launchpage}/>
-    <Route exact path="/SignUp" component={SignUp}/>
-    <Route exact path="/Login" component={Login}/>
-    <Route exact path="/HomePage" component={HomePage}/>
-    </div>
-  );
+
+  componentWillMount(){
+    var loginPage =[];
+    loginPage.push(<Loginscreen parentContext={this}/>);
+    this.setState({
+                  loginPage:loginPage
+                    })
+  }
+  render() {
+    return (
+      <div className="App">
+        {this.state.loginPage}
+      </div>
+    );
+  }
 }
 
 export default App;

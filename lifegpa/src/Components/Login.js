@@ -1,87 +1,74 @@
-import React from 'react';
-import { Link} from 'react-router-dom';
+import React, { Component } from 'react';
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import axios from 'axios';
 
-import authenticate from '../Authentication'
+class Login extends Component {
+constructor(props){
+  super(props);
+  this.state={
+  username:'',
+  password:''
+  }
+ }
 
-class Login extends React.Component {
-    constructor(props) {
-        super(props);
-
-
-        this.state = {
-            username: '',
-            password: '',
-            submitted: false,
-            loading: false,
-            error: ''
-        };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+ handleClick(event){
+    var apiBaseUrl = "http://localhost:4000/api/";
+    var payload={
+    "email":this.state.username,
+    "password":this.state.password
+    }
+    axios.post(apiBaseUrl+'login', payload)
+    .then(function (response) {
+    console.log(response);
+    if(response.data.code === 200){
+    console.log("Login successfull");
+    }
+    else if(response.data.code === 204){
+    console.log("Username password do not match");
+    alert("username password do not match")
+    }
+    else{
+    console.log("Username does not exists");
+    alert("Username does not exist");
+    }
+    })
+    .catch(function (error) {
+    console.log(error);
+    });
     }
 
-    handleChange(e) {
-        const { name, value } = e.target;
-        this.setState({ [name]: value });
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-
-        this.setState({ submitted: true });
-        const { username, password } = this.state;
-
-        // stop here if form is invalid
-        if (!(username && password)) {
-            return;
-        }
-
-        this.setState({ loading: true });
-        authenticate.login(username, password)
-            .then(
-                user => {
-                    const { from } = this.props.location.state || { from: { pathname: "/HomePage" } };
-                    this.props.history.push(from);
-                },
-                error => this.setState({ error, loading: false })
-            );
-    }
-
-    render() {
-        const { username, password, submitted, loading, error } = this.state;
-        return (
-            <div className="col-md-6 col-md-offset-3">
-                <h2>Login</h2>
-                <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
-                        <label htmlFor="username">Username: </label>
-                        <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} />
-                        {submitted && !username &&
-                            <div className="help-block">Username is required</div>
-                        }
-                    </div>
-                    <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
-                        <label htmlFor="password">Password: </label>
-                        <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} />
-                        {submitted && !password &&
-                            <div className="help-block">Password is required</div>
-                        }
-                    </div>
-                    <div className="form-group">
-                        <button className="btn btn-primary" disabled={loading}>Login</button>
-                        { loading }
-                    </div>
-                    {error &&
-                        <div className={'alert alert-danger'}>{error}</div>
-                    }
-                    <div className="back-to-home">
-                        <Link to={`/`}>Back to Home</Link>
-                    </div>
-                </form>
-            </div>
-        );
-    }
+render() {
+    return (
+      <div>
+        <MuiThemeProvider>
+          <div>
+          <AppBar
+             title="LifeGPA"
+           />
+           <h1>Login</h1>
+           <TextField
+             hintText="Enter your Username"
+             floatingLabelText="Username"
+             onChange = {(event,newValue) => this.setState({username:newValue})}
+             />
+           <br/>
+             <TextField
+               type="password"
+               hintText="Enter your Password"
+               floatingLabelText="Password"
+               onChange = {(event,newValue) => this.setState({password:newValue})}
+               />
+             <br/>
+             <RaisedButton primary={true} label="Submit" onClick={(event) => this.handleClick(event)}/>
+         </div>
+         </MuiThemeProvider>
+      </div>
+    );
+  }
 }
 
-export default Login; 
+export default Login;
