@@ -23,8 +23,8 @@ class HabitList extends React.Component {
   combineAndReduceHabitLists = apiList => {
     let combinedList = this.state.pregenHabits.concat(apiList);
     let filteredList = combinedList.filter((item, index, arr) => {
-      return arr.findIndex(x => {
-        return x.name === item.name && x.score === item.score
+      return arr.findIndex(currItem => {
+        return currItem.name === item.name && currItem.score === item.score
       }) === index;
     });
     console.log(filteredList);
@@ -35,9 +35,9 @@ class HabitList extends React.Component {
     return (
       <div className='habitList'>
         {this.combineAndReduceHabitLists(this.props.apiList).map(
-          (habit, index) => {
+          (habit) => {
             return (
-              <Habit key={index} name={habit.name} score={habit.score} />
+              <Habit key={habit.name} name={habit.name} score={habit.score} />
             )
           }
         )}
