@@ -33,6 +33,7 @@ class HabitList extends React.Component {
   }
 
   render() {
+ const { apiList } = this.props;
     return (
       <div className='habitList'>
         {this.combineAndReduceHabitLists(apiList).map(
