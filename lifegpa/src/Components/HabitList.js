@@ -21,6 +21,7 @@ class HabitList extends React.Component {
   }
 
   combineAndReduceHabitLists = apiList => {
+  const { pregenHabits } = this.state;
     let combinedList = this.state.pregenHabits.concat(apiList);
     let filteredList = combinedList.filter((item, index, arr) => {
       return arr.findIndex(currItem => {
