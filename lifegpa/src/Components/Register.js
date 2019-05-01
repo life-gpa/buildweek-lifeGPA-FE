@@ -1,97 +1,76 @@
-import React, { Component } from 'react';
-import Login from './Login'
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
+import {Link} from "react-router-dom";
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+class Register extends React.Component {
+  state = {
+    //first_name: '',
+    //last_name: '',
+    username: "",
+    password: ""
+  };
 
-
-class Register extends Component {
-  constructor(props){
-    super(props);
-    this.state={
-      first_name:'',
-      last_name:'',
-      email:'',
-      password:''
-    }
-  }
-  
-  handleClick(event){
-    var apiBaseUrl = "http://localhost:4000/api/";
-    console.log("values",this.state.first_name,this.state.last_name,this.state.email,this.state.password);
-    //To be done:check for empty values before hitting submit
-    var self = this;
-    var payload={
-    "first_name": this.state.first_name,
-    "last_name":this.state.last_name,
-    "email":this.state.email,
-    "password":this.state.password
-    }
-    axios.post(apiBaseUrl+'/register', payload)
-    .then(function (response) {
-        console.log(response);
-        if(response.data.code === 200){
-        console.log("registration successfull");
-    var loginscreen=[];
-    loginscreen.push(<Login parentContext={this}/>);
-        var loginmessage = "Not Registered yet.Go to registration";
-        self.props.parentContext.setState({loginscreen:loginscreen,
-        loginmessage:loginmessage,
-        buttonLabel:"Register",
-        isLogin:true
-        });
-        }
-    })
-    .catch(function (error) {
-        console.log(error);
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
     });
-    }
+  };
 
-    render() {
-            return (
-              <div>
-                <MuiThemeProvider>
-                    <div>
-                        <AppBar
-                            title="LifeGPA"
-                        />
-                        <h1>Register</h1>
-                        <TextField
-                            hintText="Enter your First Name"
-                            floatingLabelText="First Name"
-                            onChange = {(event,newValue) => this.setState({first_name:newValue})}
-                        />
-                    <br/>
-                        <TextField
-                            hintText="Enter your Last Name"
-                            floatingLabelText="Last Name"
-                            onChange = {(event,newValue) => this.setState({last_name:newValue})}
-                        />
-                    <br/>
-                        <TextField
-                            hintText="Enter your Email"
-                            type="email"
-                            floatingLabelText="Email"
-                            onChange = {(event,newValue) => this.setState({email:newValue})}
-                        />
-                   <br/>
-                        <TextField
-                            type = "password"
-                            hintText="Enter your Password"
-                            floatingLabelText="Password"
-                            onChange = {(event,newValue) => this.setState({password:newValue})}
-                        />
-                   <br/>
-                        <RaisedButton label="Submit" primary={true} onClick={(event) => this.handleClick(event)}/>
+  handleSubmit = e => {
+    e.preventDefault();
+    // console.log(this.props.history)
+    const log = this.state;
+    axios
+      .post("https://gentle-ridge-32500.herokuapp.com/api/register", log)
+      .then(res => {
+        const token = res.data.token;
+        localStorage.setItem("token", token);
+        this.props.history.push("/login")
+      })
+      .catch(err => console.log(err.response));
+  };
+
+  render() {
+    return (
+        <div>
+            <h1>LifeGPA</h1>
+            <div className='Register'>
+                <h2>Register</h2>
+                <form className='formContainer' onSubmit={this.handleSubmit}>
+                  <div className='form'>
+                    <input
+                        className='signUpInput username'
+                        type="username"
+                        name="username"
+                        placeholder='Username'
+                        onChange={this.handleChange}
+                        value={this.state.username}
+                        required
+                    />
+                    <input
+                        className='signUpInput password'
+                        type="password"
+                        name="password"
+                        placeholder='Password'
+                        onChange={this.handleChange}
+                        value={this.state.password}
+                        required
+                    />
                   </div>
-                 </MuiThemeProvider>
-              </div>
-            );
-    }
-}
+                  <button className='signUpButton' >Create Account</button>
+                </form>
 
+                
+
+                <div className="loginLink">
+                    <p>Already Have an Acount?</p>
+                    <Link to="/login" className='signUpLoginLink'>Login</Link>
+                </div>
+
+            </div>
+        </div>
+    );
+  }
+}
 
 export default Register;

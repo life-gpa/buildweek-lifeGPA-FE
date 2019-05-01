@@ -1,74 +1,74 @@
-import React, { Component } from 'react';
+import React from "react";
+import axios from "axios";
+import { Link} from "react-router-dom";
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-import axios from 'axios';
 
-class Login extends Component {
-constructor(props){
-  super(props);
-  this.state={
-  username:'',
-  password:''
-  }
- }
+class Login extends React.Component {
+  state = {
+    username: "",
+    password: ""
+  };
 
- handleClick(event){
-    var apiBaseUrl = "http://localhost:4000/api/";
-    var payload={
-    "email":this.state.username,
-    "password":this.state.password
-    }
-    axios.post(apiBaseUrl+'login', payload)
-    .then(function (response) {
-    console.log(response);
-    if(response.data.code === 200){
-    console.log("Login successfull");
-    }
-    else if(response.data.code === 204){
-    console.log("Username password do not match");
-    alert("username password do not match")
-    }
-    else{
-    console.log("Username does not exists");
-    alert("Username does not exist");
-    }
-    })
-    .catch(function (error) {
-    console.log(error);
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
     });
-    }
+  };
 
-render() {
+  handleSubmit = e => {
+    e.preventDefault();
+    const credentials = this.state;
+    axios
+      .post("https://gentle-ridge-32500.herokuapp.com/api/login", credentials)
+      .then(res => {
+        const token = res.data.token;
+        const id = res.data.id;
+        localStorage.setItem("token", token);
+        localStorage.setItem('id', id )
+        this.props.history.push("/home");
+      })
+      .catch(err => console.log(err.response));
+  };
+
+  render() {
     return (
-      <div>
-        <MuiThemeProvider>
-          <div>
-          <AppBar
-             title="LifeGPA"
-           />
-           <h1>Login</h1>
-           <TextField
-             hintText="Enter your Username"
-             floatingLabelText="Username"
-             onChange = {(event,newValue) => this.setState({username:newValue})}
-             />
-           <br/>
-             <TextField
-               type="password"
-               hintText="Enter your Password"
-               floatingLabelText="Password"
-               onChange = {(event,newValue) => this.setState({password:newValue})}
-               />
-             <br/>
-             <RaisedButton primary={true} label="Submit" onClick={(event) => this.handleClick(event)}/>
-         </div>
-         </MuiThemeProvider>
-      </div>
+        <div>
+            <h1>LifeGPA</h1>
+            <div className='login'>
+                <h2>Login</h2>
+                <form className='loginForm' onSubmit={this.handleSubmit}>
+                  <div className='inputs'>
+                    <input
+                        className='loginInput user'
+                        type="username"
+                        name="username"
+                        placeholder='Username'
+                        onChange={this.handleChange}
+                        value={this.state.username}
+                        required
+                    />
+                    <input
+                        className='loginInput password'
+                        type="password"
+                        name="password"
+                        placeholder='Password'
+                        onChange={this.handleChange}
+                        value={this.state.password}
+                        required
+                    />
+                  </div>
+                  <button onClick={this.handleSubmit} className='loginButton'>Login</button>
+                </form>
+
+                
+
+                <div className="createNewAccountLink">
+                    <p>New to LifeGPA?</p>
+                    <Link to="/register" className='registerationLink'>Create an Account</Link>
+                </div>
+            </div>
+        </div>
     );
   }
 }
-
 export default Login;

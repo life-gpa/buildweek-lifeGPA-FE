@@ -1,29 +1,26 @@
 import React, { Component } from 'react';
+import { Route} from "react-router-dom";
+import Login from './Components/Login';
+import Register from './Components/Register';
+import HomePage from './Components/Homepage';
+
+
+
 
 import './App.css';
-import Loginscreen from './Components/LoginScreen'
+
+
+  
+
 class App extends Component {
-  constructor(props){
-    super(props);
-    this.state={
-      loginPage:[],
-    }
-  }
 
-
-
-  componentWillMount(){
-    var loginPage =[];
-    loginPage.push(<Loginscreen parentContext={this}/>);
-    this.setState({
-                  loginPage:loginPage
-                    })
-  }
   render() {
     return (
-      <div className="App">
-        {this.state.loginPage}
-      </div>
+        <div className="App">
+          <Route path="/register" render={props => <Register {...props} />} />
+          <Route path="/login" render={props => <Login {...props} />} />
+          <Route path="/home" render={props => <HomePage {...props} />} />
+        </div>
     );
   }
 }
