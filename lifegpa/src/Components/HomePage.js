@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import HabitList from './HabitList';
+
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -8,7 +10,8 @@ class HomePage extends React.Component {
 
         this.state = {
             user: {},
-            users: []
+            users: [],
+            habitCall: []
         };
     }
 
@@ -25,7 +28,9 @@ class HomePage extends React.Component {
             <div className="">
                 <h1>Hi {user.username}!</h1>
                 <p>You're logged in!!</p>
-                
+
+                <HabitList apiList={this.state.habitCall} user={user.username} />
+
                 <p>
                     <Link to="/login">Logout</Link>
                 </p>

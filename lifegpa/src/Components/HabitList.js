@@ -27,7 +27,6 @@ class HabitList extends React.Component {
         return currItem.name === item.name && currItem.score === item.score
       }) === index;
     });
-    console.log(filteredList);
     return filteredList;
   }
 
@@ -37,7 +36,7 @@ class HabitList extends React.Component {
         {this.combineAndReduceHabitLists(this.props.apiList).map(
           (habit) => {
             return (
-              <Habit key={habit.name} name={habit.name} score={habit.score} />
+              <Habit key={habit.name} name={habit.name} score={habit.score} user={this.props.user}/>
             )
           }
         )}
