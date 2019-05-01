@@ -6,11 +6,8 @@ import { Route } from 'react-router-dom';
 import Login from './Components/Login';
 import SignUp from './Components/SignUp';
 import { HomePage } from './Components/HomePage';
-
-
-
+import HabitList from './Components/HabitList';
 import './App.css';
-
 
 function App() {
   return (
