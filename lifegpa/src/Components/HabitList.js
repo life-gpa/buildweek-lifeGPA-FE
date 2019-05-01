@@ -38,7 +38,7 @@ class HabitList extends React.Component {
         {this.combineAndReduceHabitLists(apiList).map(
           ({ name, score }) => {
             return (
-              <Habit key={name} name={name} score={score} user={user}/>
+              <Habit key={name} name={name} score={score} user={this.props.user}/>
             )
           }
         )}
