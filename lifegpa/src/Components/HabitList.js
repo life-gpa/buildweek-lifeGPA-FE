@@ -28,7 +28,6 @@ class HabitList extends React.Component {
         return currItem.name === item.name && currItem.score === item.score
       }) === index;
     });
-    console.log(filteredList);
     return filteredList;
   }
 
