@@ -35,7 +35,7 @@ class HabitList extends React.Component {
   render() {
     return (
       <div className='habitList'>
-        {this.combineAndReduceHabitLists(this.props.apiList).map(
+        {this.combineAndReduceHabitLists(apiList).map(
           ({ name, score }) => {
             return (
               <Habit key={habit.name} name={habit.name} score={habit.score} />
