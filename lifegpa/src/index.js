@@ -5,8 +5,6 @@ import App from './App';
 
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { configureFakeBackend } from './Authentication/helper';
-configureFakeBackend();
 
 
 ReactDOM.render(
