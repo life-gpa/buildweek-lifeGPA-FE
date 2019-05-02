@@ -21,14 +21,14 @@ class Login extends React.Component {
     axios
       .post("https://gentle-ridge-32500.herokuapp.com/api/login", credentials)
       .then(res => {
+        const username = res.data.username;
         const token = res.data.token;
-        const id = res.data.id;
         localStorage.setItem("token", token);
-        localStorage.setItem('id', id )
+        localStorage.setItem("username", username);
         this.props.history.push("/home");
         console.log("Logged in");
       })
-      .catch(err => console.log(err.response.statusText));
+      .catch(err => console.log(err.response));
   };
 
   render() {
