@@ -1,87 +1,75 @@
-import React from 'react';
-import { Link} from 'react-router-dom';
+import React from "react";
+import axios from "axios";
+import { Link} from "react-router-dom";
 
-
-import authenticate from '../Authentication'
 
 class Login extends React.Component {
-    constructor(props) {
-        super(props);
+  state = {
+    username: "",
+    password: ""
+  };
 
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
 
-        this.state = {
-            username: '',
-            password: '',
-            submitted: false,
-            loading: false,
-            error: ''
-        };
+  handleSubmit = e => {
+    e.preventDefault();
+    const credentials = this.state;
+    axios
+      .post("https://gentle-ridge-32500.herokuapp.com/api/login", credentials)
+      .then(res => {
+        const token = res.data.token;
+        const id = res.data.id;
+        localStorage.setItem("token", token);
+        localStorage.setItem('id', id )
+        this.props.history.push("/home");
+        console.log("Logged in");
+      })
+      .catch(err => console.log(err.response.statusText));
+  };
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(e) {
-        const { name, value } = e.target;
-        this.setState({ [name]: value });
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-
-        this.setState({ submitted: true });
-        const { username, password } = this.state;
-
-        // stop here if form is invalid
-        if (!(username && password)) {
-            return;
-        }
-
-        this.setState({ loading: true });
-        authenticate.login(username, password)
-            .then(
-                user => {
-                    const { from } = this.props.location.state || { from: { pathname: "/HomePage" } };
-                    this.props.history.push(from);
-                },
-                error => this.setState({ error, loading: false })
-            );
-    }
-
-    render() {
-        const { username, password, submitted, loading, error } = this.state;
-        return (
-            <div className="col-md-6 col-md-offset-3">
+  render() {
+    return (
+        <div>
+            <h1>LifeGPA</h1>
+            <div className='login'>
                 <h2>Login</h2>
-                <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
-                        <label htmlFor="username">Username: </label>
-                        <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} />
-                        {submitted && !username &&
-                            <div className="help-block">Username is required</div>
-                        }
-                    </div>
-                    <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
-                        <label htmlFor="password">Password: </label>
-                        <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} />
-                        {submitted && !password &&
-                            <div className="help-block">Password is required</div>
-                        }
-                    </div>
-                    <div className="form-group">
-                        <button className="btn btn-primary" disabled={loading}>Login</button>
-                        { loading }
-                    </div>
-                    {error &&
-                        <div className={'alert alert-danger'}>{error}</div>
-                    }
-                    <div className="back-to-home">
-                        <Link to={`/`}>Back to Home</Link>
-                    </div>
+                <form className='loginForm' onSubmit={this.handleSubmit}>
+                  <div className='inputs'>
+                    <input
+                        className='loginInput user'
+                        type="username"
+                        name="username"
+                        placeholder='Username'
+                        onChange={this.handleChange}
+                        value={this.state.username}
+                        required
+                    />
+                    <input
+                        className='loginInput password'
+                        type="password"
+                        name="password"
+                        placeholder='Password'
+                        onChange={this.handleChange}
+                        value={this.state.password}
+                        required
+                    />
+                  </div>
+                  <button onClick={this.handleSubmit} className='loginButton'>Login</button>
                 </form>
-            </div>
-        );
-    }
-}
 
-export default Login; 
+                
+
+                <div className="createNewAccountLink">
+                    <p>New to LifeGPA?</p>
+                    <Link to="/signup" className='registerationLink'>Create an Account</Link>
+                </div>
+            </div>
+        </div>
+    );
+  }
+}
+export default Login;
