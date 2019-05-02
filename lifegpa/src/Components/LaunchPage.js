@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 
-export default class StartPage extends Component {
+export default class LaunchPage extends Component {
   render() {
     return (
     <div>
