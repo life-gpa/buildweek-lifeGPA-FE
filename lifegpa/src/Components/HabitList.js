@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import Habit from './Habit';
 
-// Component requires prop from App containing list of habits from api
+// Component requires prop from HomePage containing list of habits from api
 
 class HabitList extends React.Component {
   constructor(props) {
