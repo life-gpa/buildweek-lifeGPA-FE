@@ -23,8 +23,6 @@ class Register extends React.Component {
     axios
       .post("https://gentle-ridge-32500.herokuapp.com/api/register", log)
       .then(res => {
-        const token = res.data.token;
-        localStorage.setItem("token", token);
         this.props.history.push("/login")
       })
       .catch(err => console.log(err.response));
