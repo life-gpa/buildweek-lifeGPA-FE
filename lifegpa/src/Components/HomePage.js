@@ -63,34 +63,6 @@ class HomePage extends React.Component {
 
   
   render() {
-    let lifeCount = 0;
-
-    this.state.habits.map(habit => {
-      let lastCompleteDate = new Date(habit.created_at);
-      lastCompleteDate.setHours(0,0,0,0)
-      console.log("lastCompleteDate:", lastCompleteDate)
-
-      let today = new Date();
-      today.setHours(0,0,0,0)
-      console.log("today:", today)
-
-      let daysSinceHabitStart;
-
-      if (today - habit.created_at > 0) {
-        daysSinceHabitStart = (today - habit.created_at) / 1000 / 60 / 60 / 24
-      } else {
-        daysSinceHabitStart = 1
-      }
-      console.log("daysSinceHabitStart:", daysSinceHabitStart)
-
-      const habitGPA = habit.count / daysSinceHabitStart
-      console.log("habitGPA:", habitGPA)
-
-      lifeCount += habitGPA
-    });
-    let lifeGPA = (lifeCount / this.state.habits.length) * 100;
-
-
     
     return (
 
@@ -99,7 +71,7 @@ class HomePage extends React.Component {
         <div className="GPA">
           <h1 className="Initial">Life GPA 4.0</h1>
 
-          <h2 className="Total">{lifeGPA}%</h2>
+          <h2 className="Total">%</h2>
         </div>
 
       </div>

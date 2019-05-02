@@ -26,8 +26,9 @@ class Login extends React.Component {
         localStorage.setItem("token", token);
         localStorage.setItem('id', id )
         this.props.history.push("/home");
+        console.log("Logged in");
       })
-      .catch(err => console.log(err.response));
+      .catch(err => console.log(err.response.statusText));
   };
 
   render() {
@@ -64,7 +65,7 @@ class Login extends React.Component {
 
                 <div className="createNewAccountLink">
                     <p>New to LifeGPA?</p>
-                    <Link to="/register" className='registerationLink'>Create an Account</Link>
+                    <Link to="/signup" className='registerationLink'>Create an Account</Link>
                 </div>
             </div>
         </div>
