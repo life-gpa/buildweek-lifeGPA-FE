@@ -23,14 +23,9 @@ class HomePage extends React.Component {
    this.getHabits()
   }
 
-<<<<<<< HEAD
-  getHabits = () => {
-    const userId = localStorage.getItem("id");
-=======
   getHabits = () => {    
     const userId = localStorage.getItem(`user`);
     
->>>>>>> ca99c4bf9a30761b86245a5fc098d487f7cdfa6b
 
     authentication()
       .get(`https://gentle-ridge-32500.herokuapp.com/api/habits/`)
