@@ -26,16 +26,11 @@ class HomePage extends React.Component {
   getHabits = () => {    
     const userId = localStorage.getItem(`user`);
     
-
     authentication()
       .get(`https://gentle-ridge-32500.herokuapp.com/api/habits/`)
       .then(res => {
-        console.log(res)
-        res.data.habits.sort((a, b) => {
-          return a.id - b.id
-        })
         this.setState({
-          habits: res.data.habits
+          habits: res.data
         });
       })
       .catch(err => console.log("Data Failed", err));
@@ -71,7 +66,8 @@ class HomePage extends React.Component {
           <h2 className="Total">%</h2>
         </div>
 
-        <HabitList apiList={[]}/>
+        {this.state.habits.length > 0 ? <HabitList apiList={this.state.habits}/> : <p>Loading...</p>}
+        {/* // <HabitList apiList={this.state.habits}/> */}
 
       </div>
     );

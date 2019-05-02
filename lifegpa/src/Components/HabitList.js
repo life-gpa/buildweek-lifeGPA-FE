@@ -11,11 +11,11 @@ class HabitList extends React.Component {
     super(props);
 
     this.pregenHabits = [
-      { name: 'asdf', score: 4 },
-      { name: 'asdfg', score: 3 },
-      { name: 'asdfgh', score: 1 },
-      { name: 'asdfghj', score: 3 },
-      { name: 'asdfghjk', score: 2 }
+      { habit_name: 'asdf', score: 4 },
+      { habit_name: 'asdfg', score: 3 },
+      { habit_name: 'asdfgh', score: 1 },
+      { habit_name: 'asdfghj', score: 3 },
+      { habit_name: 'asdfghjk', score: 2 }
     ];
 
     this.state = {
@@ -27,11 +27,13 @@ class HabitList extends React.Component {
 
   combineAndReduceHabitLists = apiList => {
     const combinedList = [...this.pregenHabits, ...apiList]
+    console.log(combinedList);
     let filteredList = combinedList.filter((item, index, arr) => {
       return arr.findIndex(currItem => {
-        return currItem.name === item.name && currItem.score === item.score
+        return currItem.habit_name === item.habit_name && currItem.score === item.score
       }) === index;
     });
+    console.log('filtered list: ', filteredList);
     return filteredList;
   }
 
@@ -43,10 +45,10 @@ class HabitList extends React.Component {
 
   addNewHabit = () => {
     const newHabit = {
-      name: this.state.newHabitName,
+      habit_name: this.state.newHabitName,
       score: this.state.newHabitScore
     }
-    if (newHabit.name) {
+    if (newHabit.habit_name) {
       this.setState(prevState => {
         return {
           habitList: [
@@ -80,9 +82,9 @@ class HabitList extends React.Component {
     return (
       <div className='habitList'>
         {habitList.map(
-          ({ name, score }) => {
+          ({ habit_name, score }) => {
             return (
-              <Habit key={`${name}${score}`} name={name} score={score} />
+              <Habit key={`${habit_name}${score}`} name={habit_name} score={score} />
             )
           }
         )}

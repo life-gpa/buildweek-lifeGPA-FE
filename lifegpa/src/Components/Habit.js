@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
+import authentication from "../Authentication/authentication";
+
 class Habit extends React.Component {
   constructor(props) {
     super(props);
@@ -11,11 +13,13 @@ class Habit extends React.Component {
 
   handleButton = e => {
     e.preventDefault();
-    axios.post('https://gentle-ridge-32500.herokuapp.com/api/new_habit', {
-      name: this.props.name,
-      score: this.props.score
-    })
+    authentication()
+      .post('https://gentle-ridge-32500.herokuapp.com/api/new_habit', {
+        habit_name: this.props.name,
+        score: this.props.score
+      })
       .then(res => {
+        console.log(res);
         this.setState({
           completed: true
         })
