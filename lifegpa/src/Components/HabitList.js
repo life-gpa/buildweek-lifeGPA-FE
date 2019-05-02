@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import Habit from './Habit';
+import HabitForm from './HabitForm';
 
 // Component requires prop from HomePage containing list of habits from api
 
@@ -16,7 +17,9 @@ class HabitList extends React.Component {
         { name: 'asdfgh', score: 1 },
         { name: 'asdfghj', score: 3 },
         { name: 'asdfghjk', score: 2 }
-      ]
+      ],
+      newHabitName: '',
+      newHabitScore: ''
     }
   }
 
@@ -31,8 +34,35 @@ class HabitList extends React.Component {
     return filteredList;
   }
 
+  handleText = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  addNewHabit = () => {
+    const newHabit = {
+      name: this.state.newHabitName,
+      score: this.state.newHabitScore
+    }
+    this.setState(prevState => {
+      return {
+        pregenHabits: [
+          ...prevState.pregenHabits,
+          newHabit
+        ]
+      }
+    })
+  }
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.addNewHabit();
+  }
+
   render() {
     const { apiList } = this.props;
+    const { newHabitName, newHabitScore } = this.state;
     return (
       <div className='habitList'>
         {this.combineAndReduceHabitLists(apiList).map(
@@ -42,6 +72,7 @@ class HabitList extends React.Component {
             )
           }
         )}
+        <HabitForm newHabitName={newHabitName} newHabitScore={newHabitScore} handleText={this.handleText} handleSubmit={this.handleSubmit} />
       </div>
     )
   }
