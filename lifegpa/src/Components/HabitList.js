@@ -10,22 +10,23 @@ class HabitList extends React.Component {
   constructor(props) {
     super(props);
 
+    this.pregenHabits = [
+      { name: 'asdf', score: 4 },
+      { name: 'asdfg', score: 3 },
+      { name: 'asdfgh', score: 1 },
+      { name: 'asdfghj', score: 3 },
+      { name: 'asdfghjk', score: 2 }
+    ];
+
     this.state = {
-      pregenHabits: [
-        { name: 'asdf', score: 4 },
-        { name: 'asdfg', score: 3 },
-        { name: 'asdfgh', score: 1 },
-        { name: 'asdfghj', score: 3 },
-        { name: 'asdfghjk', score: 2 }
-      ],
+      habitList: [],
       newHabitName: '',
       newHabitScore: ''
     }
   }
 
   combineAndReduceHabitLists = apiList => {
-  const { pregenHabits } = this.state;
-    const combinedList = [...pregenHabits, ...apiList]
+    const combinedList = [...this.pregenHabits, ...apiList]
     let filteredList = combinedList.filter((item, index, arr) => {
       return arr.findIndex(currItem => {
         return currItem.name === item.name && currItem.score === item.score
@@ -48,8 +49,8 @@ class HabitList extends React.Component {
     if (newHabit.name) {
       this.setState(prevState => {
         return {
-          pregenHabits: [
-            ...prevState.pregenHabits,
+          habitList: [
+            ...prevState.habitList,
             newHabit
           ]
         }
@@ -62,17 +63,26 @@ class HabitList extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.addNewHabit();
+    this.setState({
+      newHabitName: '',
+      newHabitScore: ''
+    })
+  }
+
+  componentDidMount() {
+    this.setState({
+      habitList: this.combineAndReduceHabitLists(this.props.apiList)
+    })
   }
 
   render() {
-    const { apiList } = this.props;
-    const { newHabitName, newHabitScore } = this.state;
+    const { habitList, newHabitName, newHabitScore } = this.state;
     return (
       <div className='habitList'>
-        {this.combineAndReduceHabitLists(apiList).map(
+        {habitList.map(
           ({ name, score }) => {
             return (
-              <Habit key={name} name={name} score={score} />
+              <Habit key={`${name}${score}`} name={name} score={score} />
             )
           }
         )}

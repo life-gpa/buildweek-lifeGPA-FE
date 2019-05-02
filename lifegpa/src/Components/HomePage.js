@@ -16,7 +16,6 @@ class HomePage extends React.Component {
     event.preventDefault();
     localStorage.removeItem("token");
     this.props.history.push("/login");
-    console.log(event);
   };
 
   componentDidMount() {
@@ -24,12 +23,7 @@ class HomePage extends React.Component {
   }
 
   getHabits = () => {
-
-    console.log('getHabits() invoked');
-    
     const userId = localStorage.getItem("id");
-    
-    console.log(userId)
 
     authentication()
       .get(`https://gentle-ridge-32500.herokuapp.com/api/users/${userId}/habits`)
@@ -65,7 +59,6 @@ class HomePage extends React.Component {
 
   
   render() {
-    
     return (
 
       <div>
@@ -75,6 +68,8 @@ class HomePage extends React.Component {
 
           <h2 className="Total">%</h2>
         </div>
+
+        <HabitList apiList={[]}/>
 
       </div>
     );

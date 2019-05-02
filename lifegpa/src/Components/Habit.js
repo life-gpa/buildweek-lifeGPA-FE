@@ -13,8 +13,7 @@ class Habit extends React.Component {
     e.preventDefault();
     axios.post('https://gentle-ridge-32500.herokuapp.com/api/new_habit', {
       name: this.props.name,
-      score: this.props.score,
-      user: this.props.user
+      score: this.props.score
     })
       .then(res => {
         this.setState({
