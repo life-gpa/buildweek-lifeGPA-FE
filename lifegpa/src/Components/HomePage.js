@@ -13,6 +13,7 @@ class HomePage extends React.Component {
   logOut = (event) => {
     event.preventDefault();
     localStorage.removeItem("token");
+    localStorage.removeItem("username");
     this.props.history.push("/login");
     console.log(event);
   };
@@ -21,18 +22,14 @@ class HomePage extends React.Component {
    this.getHabits()
   }
 
-  getHabits = () => {
-
-    console.log('getHabits() invoked');
+  getHabits = () => {    
+    const userId = localStorage.getItem(`user`);
     
-    const userId = localStorage.getItem("id");
-    
-    console.log(userId)
 
     authentication()
-      .get(`https://gentle-ridge-32500.herokuapp.com/api/users/${userId}/habits`)
+      .get(`https://gentle-ridge-32500.herokuapp.com/api/habits/`)
       .then(res => {
-        console.log(res.data)
+        console.log(res)
         res.data.habits.sort((a, b) => {
           return a.id - b.id
         })
@@ -48,7 +45,7 @@ class HomePage extends React.Component {
     e.preventDefault();
 
     authentication()
-      .delete(`https://gentle-ridge-32500.herokuapp.com/api/habits${id}`)
+      .delete(`https://gentle-ridge-32500.herokuapp.com/api/habits/`)
       .then(() => {
         authentication()
           .get("https://gentle-ridge-32500.herokuapp.com/api/habits")
