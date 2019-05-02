@@ -1,15 +1,9 @@
 import React from 'react';
 import { Route } from "react-router-dom";
 import Login from './Components/Login';
-<<<<<<< HEAD
-import SignUp from './Components/SignUp';
-import { HomePage } from './Components/HomePage';
-import './App.css';
-=======
 import Signup from './Components/Signup';
 import HomePage from './Components/Homepage';
 import LaunchPage from './Components/LaunchPage';
->>>>>>> de765dea8cd517d5ac6e162919f7c1aefef40490
 
 function App() {
     return (

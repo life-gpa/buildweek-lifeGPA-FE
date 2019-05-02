@@ -5,40 +5,6 @@ import HabitList from './HabitList';
 
 
 class HomePage extends React.Component {
-<<<<<<< HEAD
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            user: {},
-            users: [],
-            habitCall: []
-        };
-    }
-
-    componentDidMount() {
-        this.setState({ 
-            user: JSON.parse(localStorage.getItem('user')),
-            users: { loading: true }
-        });
-    }
-
-    render() {
-        const { user } = this.state;
-        return (
-            <div className="">
-                <h1>Hi {user.username}!</h1>
-                <p>You're logged in!!</p>
-
-                <HabitList apiList={this.state.habitCall} />
-
-                <p>
-                    <Link to="/login">Logout</Link>
-                </p>
-            </div>
-        );
-    }
-=======
   state = {
     habits: [],
     completed: false,
@@ -113,7 +79,6 @@ class HomePage extends React.Component {
       </div>
     );
   }
->>>>>>> de765dea8cd517d5ac6e162919f7c1aefef40490
 }
 
 export default HomePage;
