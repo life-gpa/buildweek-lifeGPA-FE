@@ -29,7 +29,7 @@ class HomePage extends React.Component {
                 <h1>Hi {user.username}!</h1>
                 <p>You're logged in!!</p>
 
-                <HabitList apiList={this.state.habitCall} user={user.username} />
+                <HabitList apiList={this.state.habitCall} />
 
                 <p>
                     <Link to="/login">Logout</Link>
