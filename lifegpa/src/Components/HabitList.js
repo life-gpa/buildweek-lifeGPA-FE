@@ -45,14 +45,18 @@ class HabitList extends React.Component {
       name: this.state.newHabitName,
       score: this.state.newHabitScore
     }
-    this.setState(prevState => {
-      return {
-        pregenHabits: [
-          ...prevState.pregenHabits,
-          newHabit
-        ]
-      }
-    })
+    if (newHabit.name) {
+      this.setState(prevState => {
+        return {
+          pregenHabits: [
+            ...prevState.pregenHabits,
+            newHabit
+          ]
+        }
+      })
+    } else {
+      console.log('You need a habit name or a score that makes sense!');
+    }
   }
 
   handleSubmit = e => {
