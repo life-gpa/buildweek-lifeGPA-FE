@@ -23,7 +23,7 @@ class Habit extends React.Component {
         })
       })
       .catch(err => {
-        console.log(`Error : ${error.message}`)
+        console.log(`Error : ${err.message}`)
       })
     this.setState({
       completed: true
