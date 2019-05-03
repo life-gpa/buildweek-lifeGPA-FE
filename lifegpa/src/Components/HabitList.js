@@ -1,47 +1,89 @@
 import React from 'react';
-import axios from 'axios';
 
 import Habit from './Habit';
-
-// Component requires prop from App containing list of habits from api
+import HabitForm from './HabitForm';
 
 class HabitList extends React.Component {
   constructor(props) {
     super(props);
 
+    this.pregenHabits = [
+      { habit_name: 'asdf', score: 4 },
+      { habit_name: 'asdfg', score: 3 },
+      { habit_name: 'asdfgh', score: 1 },
+      { habit_name: 'asdfghj', score: 3 },
+      { habit_name: 'asdfghjk', score: 2 }
+    ];
+
     this.state = {
-      pregenHabits: [
-        { name: 'asdf', score: 4 },
-        { name: 'asdfg', score: 3 },
-        { name: 'asdfgh', score: 1 },
-        { name: 'asdfghj', score: 3 },
-        { name: 'asdfghjk', score: 2 }
-      ]
+      habitList: [],
+      newHabitName: '',
+      newHabitScore: ''
     }
   }
 
   combineAndReduceHabitLists = apiList => {
-  const { pregenHabits } = this.state;
-    const combinedList = [...pregenHabits, ...apiList]
+    const combinedList = [...this.pregenHabits, ...apiList]
     let filteredList = combinedList.filter((item, index, arr) => {
       return arr.findIndex(currItem => {
-        return currItem.name === item.name && currItem.score === item.score
+        return currItem.habit_name === item.habit_name && currItem.score === item.score
       }) === index;
     });
     return filteredList;
   }
 
+  handleText = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  addNewHabit = () => {
+    const newHabit = {
+      habit_name: this.state.newHabitName,
+      score: this.state.newHabitScore
+    }
+    if (newHabit.habit_name) {
+      this.setState(prevState => {
+        return {
+          habitList: [
+            ...prevState.habitList,
+            newHabit
+          ]
+        }
+      })
+    } else {
+      console.log('You need a habit name or a score that makes sense!');
+    }
+  }
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.addNewHabit();
+    this.setState({
+      newHabitName: '',
+      newHabitScore: ''
+    })
+  }
+
+  componentDidMount() {
+    this.setState({
+      habitList: this.combineAndReduceHabitLists(this.props.apiList)
+    })
+  }
+
   render() {
- const { apiList } = this.props;
+    const { habitList, newHabitName, newHabitScore } = this.state;
     return (
       <div className='habitList'>
-        {this.combineAndReduceHabitLists(apiList).map(
-          ({ name, score }) => {
+        {habitList.map(
+          ({ habit_name, score }) => {
             return (
-              <Habit key={name} name={name} score={score} />
+              <Habit key={`${habit_name}${score}`} name={habit_name} score={score} />
             )
           }
         )}
+        <HabitForm newHabitName={newHabitName} newHabitScore={newHabitScore} handleText={this.handleText} handleSubmit={this.handleSubmit} />
       </div>
     )
   }
