@@ -30,7 +30,8 @@ class HomePage extends React.Component {
       .get(`https://gentle-ridge-32500.herokuapp.com/api/habits/`)
       .then(res => {
         this.setState({
-          habits: res.data
+          habits: res.data,
+          completed: true
         });
       })
       .catch(err => console.log("Data Failed", err));
@@ -66,7 +67,7 @@ class HomePage extends React.Component {
           <h2 className="Total">%</h2>
         </div>
 
-        {this.state.habits.length > 0 ? <HabitList apiList={this.state.habits}/> : <p>Loading...</p>}
+        {this.state.completed ? <HabitList apiList={this.state.habits}/> : <p>Loading...</p>}
         {/* // <HabitList apiList={this.state.habits}/> */}
 
       </div>
