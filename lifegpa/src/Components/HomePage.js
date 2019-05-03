@@ -3,6 +3,7 @@ import authentication from "../Authentication/authentication";
 
 import HabitList from './HabitList';
 import Percentages from './Percentages';
+import GPA from './GPA';
 
 
 class HomePage extends React.Component {
@@ -63,11 +64,7 @@ class HomePage extends React.Component {
 
         {this.state.completed ?
             <div className='homePageContent'>
-                <div className="GPA">
-                <h1 className="Initial">Life GPA 4.0</h1>
-    
-                <h2 className="Total">%</h2>
-                </div>
+                <GPA apiList={this.state.habits} />
                 <HabitList apiList={this.state.habits}/>
                 <Percentages apiList={this.state.habits} />
             </div>
