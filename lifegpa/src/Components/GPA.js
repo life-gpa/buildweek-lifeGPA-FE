@@ -6,7 +6,7 @@ const GPA = props => {
 
   return (
     <div className='GPA'>
-      <h1 className='Initial'>Life GPA 4.0</h1>
+      <h1 className='Initial'>Life GPA</h1>
 
       <h2 className='Total'>{gpa.toFixed(2)}</h2>
     </div>
