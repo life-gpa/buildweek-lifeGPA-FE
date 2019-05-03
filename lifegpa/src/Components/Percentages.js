@@ -5,8 +5,15 @@ class Percentages extends React.Component {
     super(props);
 
     this.state = {
-      habitCount: []
+      habitCount: [],
+      dayLimit: 30
     }
+  }
+
+  changeDayLimit = e => {
+    this.setState({
+      dayLimit: Number(e.target.value)
+    })
   }
 
   tallyHabits = () => {
@@ -31,8 +38,6 @@ class Percentages extends React.Component {
       })
     }
 
-    console.log(tempHabitCountList);
-
     return tempHabitCountList;
   }
 
@@ -43,12 +48,20 @@ class Percentages extends React.Component {
   }
 
   render() {
+    const { habitCount, dayLimit } = this.state;
     return (
       <div className='percentages'>
-        {this.state.habitCount.map(habit => {
+        <h3>How many days back do you want your percentages for?</h3>
+        <select name='dayLimit' onChange={this.changeDayLimit} className='dropdown'>
+          <option value='30'>30 Days</option>
+          <option value='60'>60 Days</option>
+          <option value='90'>90 Days</option>
+        </select>
+
+        {habitCount.map(habit => {
           return (
             <div key={habit.habit_name} >
-              <p>Percentage for {habit.habit_name}: {Math.round(habit.count / 30 * 100)}%</p>
+              <p>Percentage for {habit.habit_name}: {Math.round(habit.count / dayLimit * 100)}%</p>
             </div>
           )
         })}
