@@ -18,13 +18,12 @@ class Habit extends React.Component {
         score: this.props.score
       })
       .then(res => {
-        console.log(res);
         this.setState({
           completed: true
         })
       })
       .catch(err => {
-        console.error(err);
+        console.log(`Error : ${error.message}`)
       })
     this.setState({
       completed: true
