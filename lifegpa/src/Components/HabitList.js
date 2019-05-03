@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 
 import Habit from './Habit';
 import HabitForm from './HabitForm';

@@ -2,6 +2,7 @@ import React from "react";
 import authentication from "../Authentication/authentication";
 
 import HabitList from './HabitList';
+import Percentages from './Percentages';
 
 
 class HomePage extends React.Component {
@@ -23,9 +24,7 @@ class HomePage extends React.Component {
    this.getHabits()
   }
 
-  getHabits = () => {    
-    const userId = localStorage.getItem(`user`);
-    
+  getHabits = () => {
     authentication()
       .get(`https://gentle-ridge-32500.herokuapp.com/api/habits/`)
       .then(res => {
@@ -61,13 +60,19 @@ class HomePage extends React.Component {
 
       <div>
         <button onClick={this.logOut}>Log Out</button>
-        <div className="GPA">
-          <h1 className="Initial">Life GPA 4.0</h1>
 
-          <h2 className="Total">%</h2>
-        </div>
-
-        {this.state.completed ? <HabitList apiList={this.state.habits}/> : <p>Loading...</p>}
+        {this.state.completed ?
+            <div className='homePageContent'>
+                <div className="GPA">
+                <h1 className="Initial">Life GPA 4.0</h1>
+    
+                <h2 className="Total">%</h2>
+                </div>
+                <HabitList apiList={this.state.habits}/>
+                <Percentages apiList={this.state.habits} />
+            </div>
+        :
+            <p>Loading...</p>}
 
       </div>
     );
