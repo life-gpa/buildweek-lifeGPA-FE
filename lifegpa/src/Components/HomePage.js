@@ -68,7 +68,6 @@ class HomePage extends React.Component {
         </div>
 
         {this.state.completed ? <HabitList apiList={this.state.habits}/> : <p>Loading...</p>}
-        {/* // <HabitList apiList={this.state.habits}/> */}
 
       </div>
     );

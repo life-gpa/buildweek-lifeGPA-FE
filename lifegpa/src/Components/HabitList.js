@@ -4,8 +4,6 @@ import axios from 'axios';
 import Habit from './Habit';
 import HabitForm from './HabitForm';
 
-// Component requires prop from HomePage containing list of habits from api
-
 class HabitList extends React.Component {
   constructor(props) {
     super(props);
