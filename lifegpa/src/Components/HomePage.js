@@ -1,10 +1,12 @@
 import React from "react";
 import authentication from "../Authentication/authentication";
 
+import NavBar from './NavBar';
 import HabitList from './HabitList';
 import Percentages from './Percentages';
 import GPA from './GPA';
 
+import './HomePage.css';
 
 class HomePage extends React.Component {
   state = {
@@ -59,8 +61,8 @@ class HomePage extends React.Component {
   render() {
     return (
 
-      <div>
-        <button onClick={this.logOut}>Log Out</button>
+      <div className='homePage'>
+        <NavBar logOut={this.logOut} />
 
         {this.state.completed ?
             <div className='homePageContent'>
