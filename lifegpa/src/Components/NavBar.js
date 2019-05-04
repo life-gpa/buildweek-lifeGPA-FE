@@ -13,9 +13,9 @@ const styles = {
 const NavBar = props => {
   return (
     <div>
-      <AppBar position='static'>
+      <AppBar>
         <Toolbar>
-          <Grid container display='flex' justify='space-between'>
+          <Grid container display='flex' justify='space-between' position='static'>
             <Grid item>
               <Typography variant='h6'>LifeGPA Dashboard</Typography>
             </Grid>
