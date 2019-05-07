@@ -5,6 +5,8 @@ import Signup from './Components/Signup';
 import HomePage from './Components/HomePage';
 import LaunchPage from './Components/LaunchPage';
 
+import "../src/App.css";
+
 function App() {
     return (
         <div className="App">

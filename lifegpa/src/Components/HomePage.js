@@ -5,6 +5,9 @@ import HabitList from './HabitList';
 import Percentages from './Percentages';
 import GPA from './GPA';
 
+import { Button } from 'reactstrap';
+
+
 
 class HomePage extends React.Component {
   state = {
@@ -60,7 +63,6 @@ class HomePage extends React.Component {
     return (
 
       <div>
-        <button onClick={this.logOut}>Log Out</button>
 
         {this.state.completed ?
             <div className='homePageContent'>
@@ -70,6 +72,7 @@ class HomePage extends React.Component {
             </div>
         :
             <p>Loading...</p>}
+        <Button className='logout' onClick={this.logOut}>Log Out</Button>
 
       </div>
     );
@@ -77,5 +80,3 @@ class HomePage extends React.Component {
 }
 
 export default HomePage;
-      
-    

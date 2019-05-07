@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Button } from 'reactstrap';
+
 import authentication from "../Authentication/authentication";
 
 class Habit extends React.Component {
@@ -34,8 +36,11 @@ class Habit extends React.Component {
   render() {
     return (
       <div className={`habit ${ this.state.completed ? 'completed' : ''}`}>
-        <p>{this.props.name}<span className='score'> {this.props.score}</span></p>
-        <button onClick={this.handleButton}>Complete</button>
+        <div class="habits">
+          <p>{this.props.name} </p>
+          <p><span className='score'> {this.props.score}</span> </p>
+        </div>
+        <Button color="secondary" onClick={this.handleButton}>Complete</Button>
       </div>
     )
   }
