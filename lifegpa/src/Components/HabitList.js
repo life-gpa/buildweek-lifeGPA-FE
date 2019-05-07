@@ -8,11 +8,7 @@ class HabitList extends React.Component {
     super(props);
 
     this.pregenHabits = [
-      { habit_name: 'asdf', score: 4 },
-      { habit_name: 'asdfg', score: 3 },
-      { habit_name: 'asdfgh', score: 1 },
-      { habit_name: 'asdfghj', score: 3 },
-      { habit_name: 'asdfghjk', score: 2 }
+      { habit_name: 'Plant Tree', score: 0 }
     ];
 
     this.state = {
@@ -76,6 +72,10 @@ class HabitList extends React.Component {
     const { habitList, newHabitName, newHabitScore } = this.state;
     return (
       <div className='habitList'>
+        <div className='descrip'>
+          <p>Name of Habit</p>
+          <p>Importance</p>
+        </div>
         {habitList.map(
           ({ habit_name, score }) => {
             return (
